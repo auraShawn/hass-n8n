@@ -1,6 +1,6 @@
 {
   "name": "Hass n8n",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "slug": "hass-n8n",
   "description": "Self host your n8n instance",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
@@ -21,7 +21,7 @@
     "auth": false,
     "auth_username": "",
     "auth_password": "",
-    "timezone": "Europe/Berlin",
+    "timezone": "America/New_York",
     "protocol": "http",
     "certfile": "fullchain.pem",
     "keyfile": "privkey.pem"
