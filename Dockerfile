@@ -1,11 +1,11 @@
-FROM node:14.15-alpine
+FROM node:18.7.0-alpine
 
-ARG N8N_VERSION=0.156.0
+ARG N8N_VERSION=0.189.1
 
 RUN if [ -z "$N8N_VERSION" ] ; then echo "The N8N_VERSION argument is missing!" ; exit 1; fi
 
 # Update everything and install needed dependencies
-RUN apk add --update graphicsmagick tzdata git su-exec jq
+RUN apk add --update graphicsmagick tzdata git su-exec jq tini
 
 # # Set a custom user to not have n8n run as root
 USER root
@@ -13,7 +13,7 @@ USER root
 # Install n8n and the also temporary all the packages
 # it needs to build it correctly.
 RUN apk --update add --virtual build-dependencies python build-base ca-certificates && \
-    npm_config_user=root npm install -g full-icu n8n@${N8N_VERSION} && \
+    npm_config_user=root npm install -g npm@latest full-icu n8n@${N8N_VERSION} && \
     apk del build-dependencies
 
 # Install fonts
@@ -28,6 +28,6 @@ ENV NODE_ICU_DATA /usr/local/lib/node_modules/full-icu
 WORKDIR /data
 
 COPY docker-entrypoint.sh /tmp/docker-entrypoint.sh
-ENTRYPOINT ["sh", "/tmp/docker-entrypoint.sh"]
+ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
 
 EXPOSE 5678/tcp
