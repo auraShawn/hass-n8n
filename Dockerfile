@@ -29,7 +29,7 @@ RUN npm run build
 # 2. Start with a new clean image with just the code that is needed to run n8n
 FROM node:16-alpine
 
-ARG N8N_VERSION=0.189.1
+ARG N8N_VERSION=0.194.0
 
 RUN if [ -z "$N8N_VERSION" ] ; then echo "The N8N_VERSION argument is missing!" ; exit 1; fi
 
